@@ -1,0 +1,23 @@
+{
+  "name": "webpack5-boilerplate",
+  "version": "0.0.0",
+  "description": "Webpack 5 boilerplate for",
+  "author": "Ömer Balyali <omerbalyali@gmail.com> (http://www.omerbalyali.com/)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf build",
+    "start": "wp dev",
+    "build": "wp build",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "webpack",
+    "react"
+  ],
+  "browserslist": [
+    "defaults"
+  ]
+}
