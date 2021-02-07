@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
+    "module": "commonjs",
+    "target": "es2020",
     "moduleResolution": "node",
     "jsx": "preserve",
     "baseUrl": "./",
@@ -11,8 +11,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": false,
-    "resolveJsonModule": true,
-    "importsNotUsedAsValues": "error"
+    "resolveJsonModule": true
   },
   "include": ["src", "types"]
 }
