@@ -10,6 +10,10 @@ const PurgeCssWebpackPlugin = require("purgecss-webpack-plugin");
 import * as cssMinimizerWebpackPlugin from "css-minimizer-webpack-plugin";
 const webpackObfuscatorPlugin = require("webpack-obfuscator");
 import * as compressionWebpackPlugin from "compression-webpack-plugin";
+import {
+  WebpackManifestPlugin,
+  Options as WebpackManifestOptions,
+} from "webpack-manifest-plugin";
 
 const mode = argv.mode;
 const devMode = argv.mode !== "production" ? true : false;
@@ -70,6 +74,7 @@ const compressionOptions: compressionWebpackPlugin.Options<any> = {
   include: /\/.(css|js)/,
   deleteOriginalAssets: true,
 };
+const manifestOptions: WebpackManifestOptions = {};
 
 const extensions = { javascript: javascriptExtensions };
 const plugins = [
@@ -80,6 +85,7 @@ const plugins = [
   }),
   // new PurgeCssWebpackPlugin(purgeCssOptions),
   new HtmlWebpackPlugin(HtmlPluginOptions),
+  !devMode ? new WebpackManifestPlugin(manifestOptions) : () => null,
   !devMode
     ? new webpackObfuscatorPlugin({ rotateStringArray: true }, [
         "**vendor**.js",
