@@ -6,9 +6,9 @@ import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { WebpackPluginServe } from "webpack-plugin-serve";
 const StylelintWebpackPlugin = require("stylelint-webpack-plugin");
-const PurgeCssWebpackPlugin = require("purgecss-webpack-plugin");
+// const PurgeCssWebpackPlugin = require("purgecss-webpack-plugin");
 import * as cssMinimizerWebpackPlugin from "css-minimizer-webpack-plugin";
-const webpackObfuscatorPlugin = require("webpack-obfuscator");
+// const webpackObfuscatorPlugin = require("webpack-obfuscator");
 import * as compressionWebpackPlugin from "compression-webpack-plugin";
 import {
   WebpackManifestPlugin,
@@ -19,7 +19,6 @@ const mode = argv.mode;
 const devMode = argv.mode !== "production" ? true : false;
 
 const javascriptExtensions = [".ts", ".tsx", ".js", ".jsx"];
-const cssExtensions = [".css"];
 
 const javascriptRule: webpack.RuleSetRule = {
   test: /\.(ts|tsx|js|jsx)$/,
@@ -48,6 +47,17 @@ const cssRule: webpack.RuleSetRule = {
   ],
 };
 
+const imagesRule: webpack.RuleSetRule = {
+  test: /\.(png|jpg)$/,
+  type: "asset",
+  parser: { dataUrlCondition: { maxSize: 15000 } },
+};
+
+const svgRule: webpack.RuleSetRule = {
+  test: /\.svg$/,
+  type: "asset",
+};
+
 const stylelintOptions = {
   files: "./src/**/*.css",
   emitError: true,
@@ -55,9 +65,9 @@ const stylelintOptions = {
   failOnError: true,
   failOnWarning: true,
 };
-const purgeCssOptions = {
-  paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }),
-};
+// const purgeCssOptions = {
+//   paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }),
+// };
 
 const HtmlPluginOptions: HtmlWebpackPlugin.Options = {
   template: path.resolve(__dirname, "./public/index.html"),
@@ -86,11 +96,11 @@ const plugins = [
   // new PurgeCssWebpackPlugin(purgeCssOptions),
   new HtmlWebpackPlugin(HtmlPluginOptions),
   !devMode ? new WebpackManifestPlugin(manifestOptions) : () => null,
-  !devMode
-    ? new webpackObfuscatorPlugin({ rotateStringArray: true }, [
-        "**vendor**.js",
-      ])
-    : () => null,
+  // !devMode
+  //   ? new webpackObfuscatorPlugin({ rotateStringArray: true }, [
+  //       "**vendor**.js",
+  //     ])
+  //   : () => null,
   !devMode ? new compressionWebpackPlugin(compressionOptions) : () => null,
 ];
 const optimizations: webpack.Configuration = {
@@ -110,6 +120,6 @@ const optimizations: webpack.Configuration = {
   },
 };
 
-const rules = [javascriptRule, cssRule];
+const rules = [javascriptRule, cssRule, imagesRule, svgRule];
 
 export { mode, devMode, extensions, plugins, rules, optimizations };
